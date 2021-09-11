@@ -1,8 +1,6 @@
 import React from 'react';
-import Photo from './Components/PhotoList';
-import { Route, NavLink } from 'react-router-dom';
-import Search from './Components/Search';
-import PhotoList from './Components/PhotoList';
+import { NavLink } from 'react-router-dom';
+
 
 const Nav = (props) => (
 
