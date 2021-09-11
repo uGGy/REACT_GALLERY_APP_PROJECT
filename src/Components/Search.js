@@ -1,29 +1,25 @@
 import React, { Component } from 'react';
-import { Route } from 'react-dom';
+import { withRouter } from 'react-router'
 
-export default class Search extends Component {
+class Search extends Component {
 
     state = {
         searchText: ''
-      }
-
-
+      };
   
     searchValue = e => {
         this.setState({ searchText: e.target.value });
     }
-    
+
     handleSumbit = e => {
-        const { match: {params} } = this.props
-
         e.preventDefault();
-        this.props.onSearch(this.query.value);
-
-        let topicSearched = this.query.value;
-        let path =  `${params.topicSearched}`;
-        this.props.push(path);
+        const params = this.state.searchText;
+        let path = `/search/${params}`;
+        this.props.history.push(path);
+        this.props.onSearch(params);
         e.currentTarget.reset();
     }
+
 
     render() {
         return(
@@ -45,4 +41,6 @@ export default class Search extends Component {
     }
 }
 
+Search = withRouter(Search);
 
+export default Search
