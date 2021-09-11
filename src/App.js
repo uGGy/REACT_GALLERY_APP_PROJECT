@@ -1,6 +1,7 @@
-import React, { Component, Fragment } from 'react';
-import { BrowserRouter,Route, Switch, Redirect } from 'react-router-dom';
+import React, { Component } from 'react';
+import { BrowserRouter as Router,Route, Switch } from 'react-router-dom';
 import axios from 'axios';
+import { Redirect } from 'react-router';
 
 // Components
 import Header from './Header';
@@ -52,35 +53,37 @@ render() {
 
   return (
     
-    <BrowserRouter>
+    <Router>
       <Header />
       <div className="container">
+      <Route path="/" render={ () => <Search onSearch={this.performSearch} /> } />
+      <Nav />
 
-        {/* <Switch> */}
-        <Route path="/" render={ () => <Search onSearch={this.performSearch} /> } />
-        <Route       path="/" render={ () => <Nav data={this.state.photos} onSearch={this.performSearch} /> } />
-        <Route exact path="/" render={props => <PhotoList data={this.state.photos} /> }/>
-        {/* <Route component={NotFound} /> */}
+        <Switch>
+        <Route exact path="/">
+        <Redirect to="/sunsets" />
+        </Route>
+        
+
 
         {/* Search Route */}
+        <Route path="/search/:searchText" render={ props => <PhotoList data={this.state.photos} onSearch={this.performSearch} /> } />
 
-        <Route exact path="/search/:topicSearched" component={Search} />
-
-        
         {/* Navigation Links */}
 
         <Route exact path="/sunsets" render={ () => <PhotoList data={this.state.photos} onSearch={this.performSearch('sunsets')}  /> } />
-        <Route exact path="/moonlight" render={ () => <PhotoList data={this.state.photos} onSearch={this.performSearch('moonlight')}  />} />
+        <Route exact path="/moonlight" render={ () => <PhotoList data={this.state.photos} onSearch={this.performSearch('moon light')}  />} />
         <Route exact path="/auroraborealis" render={ () => <PhotoList data={this.state.photos} onSearch={this.performSearch('aurora borealis')} /> } />
-      
+
+        
 
         {/* Not Found */}
         {
           (this.state.loading) ? <p className="Loading">Loading...</p> : <Route exact path="/notfound" render={ () => <NotFound /> }/>
         }
-
+        /</Switch>
       </div>
-    </BrowserRouter>
+    </Router>
   );
 }
 }
