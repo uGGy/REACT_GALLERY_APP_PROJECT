@@ -61,7 +61,7 @@ render() {
 
         <Switch>
         <Route exact path="/">
-        <Redirect to="/sunsets" />
+        <Redirect exact to="/sunsets" />
         </Route>
         
 
